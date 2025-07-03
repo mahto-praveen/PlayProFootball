@@ -1,0 +1,125 @@
+CREATE DATABASE IF NOT EXISTS football_tournament;
+USE football_tournament;
+
+CREATE TABLE roles (
+  role_id INT NOT NULL AUTO_INCREMENT,
+  role_name VARCHAR(50) NOT NULL,
+  PRIMARY KEY (role_id)
+);
+
+CREATE TABLE state (
+  stid INT NOT NULL AUTO_INCREMENT,
+  stname VARCHAR(100) NOT NULL,
+  PRIMARY KEY (stid)
+);
+
+CREATE TABLE city (
+  cityid INT NOT NULL AUTO_INCREMENT,
+  cityname VARCHAR(100) NOT NULL,
+  stid INT NOT NULL,
+  PRIMARY KEY (cityid),
+  CONSTRAINT fk_city_state FOREIGN KEY (stid) REFERENCES state (stid)
+);
+
+CREATE TABLE user (
+  user_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  username VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  phone VARCHAR(15),
+  role_id INT NOT NULL,
+  city_id INT,
+  PRIMARY KEY (user_id),
+  UNIQUE KEY uk_user_username (username),
+  UNIQUE KEY uk_user_email (email),
+  CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES roles (role_id),
+  CONSTRAINT fk_user_city FOREIGN KEY (city_id) REFERENCES city (cityid)
+);
+
+CREATE TABLE organization (
+  o_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  phone VARCHAR(15),
+  password VARCHAR(255) NOT NULL,
+  address TEXT,
+  user_id INT NOT NULL,
+  PRIMARY KEY (o_id),
+  CONSTRAINT fk_org_user FOREIGN KEY (user_id) REFERENCES user (user_id)
+);
+
+CREATE TABLE team (
+  team_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  manager_name VARCHAR(100),
+  phone VARCHAR(15),
+  city_id INT,
+  PRIMARY KEY (team_id),
+  CONSTRAINT fk_team_city FOREIGN KEY (city_id) REFERENCES city (cityid)
+);
+
+CREATE TABLE tournament (
+  tour_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL,
+  location VARCHAR(100),
+  o_id INT NOT NULL,
+  PRIMARY KEY (tour_id),
+  CONSTRAINT fk_tour_org FOREIGN KEY (o_id) REFERENCES organization (o_id)
+);
+
+CREATE TABLE matches (
+  match_id INT NOT NULL AUTO_INCREMENT,
+  tour_id INT NOT NULL,
+  team1_id INT NOT NULL,
+  team2_id INT NOT NULL,
+  match_date DATETIME NOT NULL,
+  venue VARCHAR(100),
+  score_team1 INT,
+  score_team2 INT,
+  PRIMARY KEY (match_id),
+  CONSTRAINT fk_match_tour FOREIGN KEY (tour_id) REFERENCES tournament (tour_id),
+  CONSTRAINT fk_match_team1 FOREIGN KEY (team1_id) REFERENCES team (team_id),
+  CONSTRAINT fk_match_team2 FOREIGN KEY (team2_id) REFERENCES team (team_id)
+);
+
+CREATE TABLE players (
+  player_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  age INT,
+  position VARCHAR(50),
+  team_id INT NOT NULL,
+  PRIMARY KEY (player_id),
+  CONSTRAINT fk_player_team FOREIGN KEY (team_id) REFERENCES team (team_id)
+);
+
+CREATE TABLE tournament_stats (
+  stat_id INT NOT NULL AUTO_INCREMENT,
+  tour_id INT NOT NULL,
+  red_cards INT DEFAULT 0,
+  yellow_cards INT DEFAULT 0,
+  fouls INT DEFAULT 0,
+  offsides INT DEFAULT 0,
+  passes INT DEFAULT 0,
+  possession FLOAT DEFAULT 0.0,
+  PRIMARY KEY (stat_id),
+  CONSTRAINT fk_stats_tour FOREIGN KEY (tour_id) REFERENCES tournament (tour_id)
+);
+
+CREATE TABLE match_score (
+  score_id INT NOT NULL AUTO_INCREMENT,
+  match_id INT NOT NULL,
+  team_id INT NOT NULL,
+  goals INT DEFAULT 0,
+  red_cards INT DEFAULT 0,
+  yellow_cards INT DEFAULT 0,
+  fouls INT DEFAULT 0,
+  offsides INT DEFAULT 0,
+  passes INT DEFAULT 0,
+  possession FLOAT DEFAULT 0.0,
+  PRIMARY KEY (score_id),
+  CONSTRAINT fk_score_match FOREIGN KEY (match_id) REFERENCES matches (match_id),
+  CONSTRAINT fk_score_team FOREIGN KEY (team_id) REFERENCES team (team_id)
+);
