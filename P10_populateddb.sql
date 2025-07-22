@@ -1,4 +1,3 @@
-use p10_create;
 INSERT INTO roles (role_name)
 VALUES 
   ('Admin'),
