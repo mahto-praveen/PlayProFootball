@@ -16,6 +16,6 @@ public class User {
 
     private String username;
     private String password;
-    private String role; // PLAYER, ORG, ADMIN
+    private String role;
     private boolean enabled;
 }
