@@ -1,39 +1,65 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from './authSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/authSlice";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import AuthLayout from "../../components/AuthLayout";
 
-export default function Register() {
-  const [form, setForm] = useState({ username: '', password: '', role: 'USER' });
+const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const [form, setForm] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const result = await dispatch(register(form));
-    if (result.meta.requestStatus === 'fulfilled') {
-      navigate('/');
-    }
+    dispatch(register(form)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") navigate("/dashboard");
+    });
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="username" onChange={handleChange} value={form.username} required placeholder="Username" className="w-full p-2 border rounded" />
-        <input name="password" type="password" onChange={handleChange} value={form.password} required placeholder="Password" className="w-full p-2 border rounded" />
-        <select name="role" onChange={handleChange} value={form.role} className="w-full p-2 border rounded">
-          <option value="USER">User</option>
-          <option value="ADMIN">Admin</option>
-        </select>
-        <button disabled={loading} className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
-          {loading ? 'Registering...' : 'Register'}
+    <AuthLayout title="Register for PlayProFootball">
+      <motion.form
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        onSubmit={handleSubmit}
+        className="space-y-5"
+      >
+        <input
+          type="text"
+          placeholder="Username"
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={form.username}
+          onChange={(e) => setForm({ ...form, username: e.target.value })}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
+        <button
+          type="submit"
+          className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 rounded-lg transition"
+        >
+          Register
         </button>
-      </form>
-    </div>
+      </motion.form>
+    </AuthLayout>
   );
-}
+};
+
+export default Register;

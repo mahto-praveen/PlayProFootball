@@ -1,35 +1,54 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from './authSlice';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/authSlice";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import AuthLayout from "../../components/AuthLayout";
 
-export default function Login() {
-  const [form, setForm] = useState({ username: '', password: '' });
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const [form, setForm] = useState({ email: "", password: "" });
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const result = await dispatch(login(form));
-    if (result.meta.requestStatus === 'fulfilled') {
-      navigate('/');
-    }
+    dispatch(login(form)).then((res) => {
+      if (res.meta.requestStatus === "fulfilled") navigate("/dashboard");
+    });
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white p-6 rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input name="username" onChange={handleChange} value={form.username} required placeholder="Username" className="w-full p-2 border rounded" />
-        <input name="password" type="password" onChange={handleChange} value={form.password} required placeholder="Password" className="w-full p-2 border rounded" />
-        <button disabled={loading} className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-          {loading ? 'Logging in...' : 'Login'}
+    <AuthLayout title="Login to PlayProFootball">
+      <motion.form
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        onSubmit={handleSubmit}
+        className="space-y-5"
+      >
+        <input
+          type="email"
+          placeholder="Email"
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={form.email}
+          onChange={(e) => setForm({ ...form, email: e.target.value })}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+          value={form.password}
+          onChange={(e) => setForm({ ...form, password: e.target.value })}
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+        >
+          Login
         </button>
-      </form>
-    </div>
+      </motion.form>
+    </AuthLayout>
   );
-}
+};
+
+export default Login;
