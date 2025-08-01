@@ -9,12 +9,11 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Rule {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
     private String description;
 
     @ManyToOne
