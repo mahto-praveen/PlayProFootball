@@ -19,6 +19,7 @@ const Navbar = () => {
         <div className="space-x-4">
           <Link to="/dashboard" className="hover:text-yellow-300">Dashboard</Link>
           <Link to="/profile" className="hover:text-yellow-300">Profile</Link>
+          <Link to="/tournaments" className="hover:text-yellow-300">Tournaments</Link>
           <button onClick={handleLogout} className="hover:text-red-400">Logout</button>
         </div>
       </div>
