@@ -27,27 +27,27 @@ public class TournamentService {
                 .collect(Collectors.toList());
     }
 
-    private TournamentDTO convertToDTO(Tournament tournament) {
-        TournamentDTO dto = new TournamentDTO();
-        dto.setId(tournament.getId());
-        dto.setName(tournament.getName());
-        dto.setDescription(tournament.getDescription());
-        dto.setLocation(tournament.getLocation());
-        dto.setStartDate(tournament.getStartDate());
-        dto.setEndDate(tournament.getEndDate());
-        dto.setType(tournament.getType());
-
+    private TournamentDTO convertToDTO(Tournament t) {
         LocalDate today = LocalDate.now();
-        if (today.isBefore(tournament.getStartDate())) {
-            dto.setStatus("Upcoming");
-        } else if (!today.isAfter(tournament.getEndDate())) {
-            dto.setStatus("Ongoing");
-        } else {
-            dto.setStatus("Finished");
-        }
+        String status;
+        if (today.isBefore(t.getStartDate()))       status = "Upcoming";
+        else if (!today.isAfter(t.getEndDate()))    status = "Ongoing";
+        else                                         status = "Finished";
 
-        return dto;
+        return TournamentDTO.builder()
+                .id(t.getId())
+                .name(t.getName())
+                .description(t.getDescription())
+                .stateId(t.getState().getId())
+                .stateName(t.getState().getName())
+                .city(t.getCity())
+                .startDate(t.getStartDate())
+                .endDate(t.getEndDate())
+                .type(t.getType())
+                .status(status)
+                .build();
     }
+
 
 
 }
