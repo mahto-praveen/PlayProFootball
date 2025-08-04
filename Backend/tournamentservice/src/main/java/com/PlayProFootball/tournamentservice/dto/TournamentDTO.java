@@ -1,30 +1,22 @@
-package com.PlayProFootball.tournamentservice.entity;
+package com.PlayProFootball.tournamentservice.dto;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
+import com.PlayProFootball.tournamentservice.entity.TournamentType;
+
 import lombok.*;
 
-@Entity
-@Table(name = "tournament")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Tournament {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TournamentDTO {
     private Long id;
-
     private String name;
     private String description;
     private String location;
-
     private LocalDate startDate;
     private LocalDate endDate;
-
-    @Enumerated(EnumType.STRING)
     private TournamentType type;
+    private String status;
 }
-

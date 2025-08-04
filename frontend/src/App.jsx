@@ -5,7 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Profile from './pages/Profile';
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
-import TournamentPage from "./pages/TournamentPage"; // ✅ Import here
+import TournamentPage from "./pages/TournamentPage"; 
+import CreateTournamentForm from './pages/CreateTournamentForm';
 
 function App() {
   return (
@@ -14,7 +15,14 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/tournaments" element={<TournamentPage />} /> {/* ✅ Add here */}
+        <Route path="/tournaments" element={<TournamentPage />} />
+
+        <Route 
+          path="/tournaments/create" 
+          element={
+                <CreateTournamentForm />
+                  } 
+        />
         <Route
           path="/dashboard"
           element={

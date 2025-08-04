@@ -1,7 +1,6 @@
-// src/api/tournamentAPI.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8081/api/tournaments';
+const BASE_URL = 'http://localhost:8082/api/tournaments';
 
 // Fetch all tournaments (GET)
 export const fetchTournaments = async () => {

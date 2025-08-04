@@ -1,6 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { fetchTournaments } from '../api/tournamentAPI';
 
 const TournamentPage = () => {
+  const [tournaments, setTournaments] = useState([]);
+
+  useEffect(() => {
+    const loadTournaments = async () => {
+      try {
+        const data = await fetchTournaments();
+        setTournaments(data);
+      } catch (err) {
+        console.error("Error fetching tournaments:", err);
+      }
+    };
+
+    loadTournaments();
+  }, []);
+
+  const filterByStatus = (status) => {
+    return tournaments.filter((t) =>
+      t.status?.toLowerCase() === status.toLowerCase()
+    );
+  };
+
   return (
     <div className="bg-gray-900 min-h-screen text-white">
       {/* Hero Section */}
@@ -18,97 +40,75 @@ const TournamentPage = () => {
         <aside className="lg:w-1/4 bg-gray-800 p-6 rounded-xl">
           <h2 className="text-xl font-semibold mb-4">🔍 Filters</h2>
           <div className="flex flex-col gap-4">
-            <input
-              type="text"
-              placeholder="By Name"
-              className="px-3 py-2 rounded text-black"
-            />
+            <input type="text" placeholder="By Name" className="px-3 py-2 rounded text-black" />
             <input type="date" className="px-3 py-2 rounded text-black" />
-
-            {/* State Dropdown */}
             <select className="px-3 py-2 rounded text-black">
               <option>Select State</option>
               <option>Maharashtra</option>
               <option>Karnataka</option>
               <option>Delhi</option>
-              <option>Tamil Nadu</option>
-              <option>West Bengal</option>
             </select>
-
-            {/* City Dropdown */}
             <select className="px-3 py-2 rounded text-black">
               <option>Select City</option>
               <option>Mumbai</option>
               <option>Pune</option>
               <option>Bangalore</option>
-              <option>Chennai</option>
-              <option>Kolkata</option>
               <option>Delhi</option>
             </select>
-
-            {/* Type Dropdown */}
             <select className="px-3 py-2 rounded text-black">
               <option>Type</option>
               <option>Knockout</option>
               <option>League</option>
             </select>
-
             <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg">
               Apply Filters
             </button>
           </div>
         </aside>
 
-        {/* Tournament Sections */}
+        {/* Main Content */}
         <main className="lg:w-3/4 flex flex-col gap-10">
-          {/* Upcoming */}
-          <section>
-            <h2 className="text-2xl font-bold mb-4">🟢 Upcoming Tournaments</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((id) => (
-                <TournamentCard key={id} status="upcoming" />
-              ))}
-            </div>
-          </section>
-
-          {/* Ongoing */}
-          <section>
-            <h2 className="text-2xl font-bold mb-4">🔴 Ongoing Tournaments</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[4, 5].map((id) => (
-                <TournamentCard key={id} status="ongoing" />
-              ))}
-            </div>
-          </section>
-
-          {/* Finished */}
-          <section>
-            <h2 className="text-2xl font-bold mb-4">🟡 Finished Tournaments</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[6, 7, 8].map((id) => (
-                <TournamentCard key={id} status="finished" />
-              ))}
-            </div>
-          </section>
+          <Section title="🟡 Upcoming Tournaments" data={filterByStatus("Upcoming")} />
+          <Section title="🟢 Ongoing Tournaments" data={filterByStatus("Ongoing")} />
+          <Section title="🔴 Finished Tournaments" data={filterByStatus("Finished")} />
         </main>
       </div>
     </div>
   );
 };
 
-const TournamentCard = ({ status }) => {
+const Section = ({ title, data }) => (
+  <section>
+    <h2 className="text-2xl font-bold mb-4">{title}</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {data.length > 0 ? (
+        data.map((tournament) => (
+          <TournamentCard key={tournament.id} tournament={tournament} />
+        ))
+      ) : (
+        <p className="text-gray-400">No tournaments found.</p>
+      )}
+    </div>
+  </section>
+);
+
+const TournamentCard = ({ tournament }) => {
+  const { name, location, startDate, endDate, status } = tournament;
+
   const statusColor =
-    status === 'upcoming'
+    status === 'Upcoming'
+      ? 'border-yellow-500'
+      : status === 'Ongoing'
       ? 'border-green-500'
-      : status === 'ongoing'
-      ? 'border-red-500'
-      : 'border-yellow-500';
+      : 'border-red-500';
 
   return (
     <div className={`bg-gray-800 border-l-4 ${statusColor} p-4 rounded-xl shadow-md`}>
-      <h3 className="text-xl font-semibold mb-2">Champions Cup</h3>
-      <p className="text-sm text-gray-300 mb-1">📍 Mumbai, Maharashtra</p>
-      <p className="text-sm text-gray-400">🗓️ Starts: 20th Aug 2025</p>
+      <h3 className="text-xl font-semibold mb-2">{name}</h3>
+      <p className="text-sm text-gray-300 mb-1">📍 {location || "Unknown location"}</p>
+      <p className="text-sm text-gray-400">
+        🗓️ {new Date(startDate).toDateString()} → {new Date(endDate).toDateString()}
+      </p>
     </div>
   );
 };
