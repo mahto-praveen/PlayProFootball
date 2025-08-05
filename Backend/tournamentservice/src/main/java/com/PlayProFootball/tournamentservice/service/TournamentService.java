@@ -23,16 +23,35 @@ public class TournamentService {
     public List<TournamentDTO> getAllTournamentsWithStatus() {
         return tournamentRepository.findAll()
                 .stream()
+                .filter(Tournament::isPublished)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
+    
+    public String publishTournament(Long id) {
+        Tournament t = tournamentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tournament not found"));
+        t.setPublished(true);
+        tournamentRepository.save(t);
+        return "Tournament published";
+    }
+
+    public String unpublishTournament(Long id) {
+        Tournament t = tournamentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tournament not found"));
+        t.setPublished(false);
+        tournamentRepository.save(t);
+        return "Tournament unpublished";
+    }
+
+
 
     private TournamentDTO convertToDTO(Tournament t) {
         LocalDate today = LocalDate.now();
         String status;
         if (today.isBefore(t.getStartDate()))       status = "Upcoming";
         else if (!today.isAfter(t.getEndDate()))    status = "Ongoing";
-        else                                         status = "Finished";
+        else                                        status = "Finished";
 
         return TournamentDTO.builder()
                 .id(t.getId())
@@ -45,8 +64,10 @@ public class TournamentService {
                 .endDate(t.getEndDate())
                 .type(t.getType())
                 .status(status)
+                .isPublished(t.isPublished())
                 .build();
     }
+
 
 
 

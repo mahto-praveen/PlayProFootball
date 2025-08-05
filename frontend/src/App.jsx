@@ -5,8 +5,10 @@ import Dashboard from "./pages/Dashboard";
 import Profile from './pages/Profile';
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
-import TournamentPage from "./pages/TournamentPage"; 
-import CreateTournamentForm from './pages/CreateTournamentForm';
+import TournamentPage from "./tournament/TournamentPage"; 
+import CreateTournamentForm from './tournament/CreateTournamentForm';
+import CreateTournamentPage from "./tournament/CreateTournament";
+import ManageTournamentsPage from "./tournament/ManageTournamentsPage";
 
 function App() {
   return (
@@ -16,9 +18,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/tournaments" element={<TournamentPage />} />
+        <Route path="/manage-tournaments" element={<ManageTournamentsPage />} />
 
         <Route 
-          path="/tournaments/create" 
+          path="/tournaments/createP" 
           element={
                 <CreateTournamentForm />
                   } 
@@ -39,6 +42,13 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/tournaments/create"
+          element={
+            <CreateTournamentPage />
+          }
+        />
+
         <Route path="*" element={<Login />} />
       </Routes>
     </>

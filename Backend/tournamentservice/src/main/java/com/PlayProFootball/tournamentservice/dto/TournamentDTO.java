@@ -25,4 +25,5 @@ public class TournamentDTO {
     private TournamentType type;
 
     private String status;
+    private boolean isPublished;
 }

@@ -17,3 +17,24 @@ export const createTournament = async (data, token) => {
   });
   return response.data;
 };
+
+// Publish tournament (PUT)
+export const publishTournament = async (id, token) => {
+  const response = await axios.put(`${BASE_URL}/${id}/publish`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+// Unpublish tournament (PUT)
+export const unpublishTournament = async (id, token) => {
+  const response = await axios.put(`${BASE_URL}/${id}/unpublish`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+

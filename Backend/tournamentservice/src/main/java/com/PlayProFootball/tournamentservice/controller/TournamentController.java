@@ -5,6 +5,7 @@ import com.PlayProFootball.tournamentservice.entity.Tournament;
 import com.PlayProFootball.tournamentservice.service.TournamentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,4 +27,15 @@ public class TournamentController {
     public List<TournamentDTO> getAllTournaments() {
         return tournamentService.getAllTournamentsWithStatus();
     }
+    
+    @PutMapping("/{id}/publish")
+    public ResponseEntity<String> publishTournament(@PathVariable Long id) {
+        return ResponseEntity.ok(tournamentService.publishTournament(id));
+    }
+
+    @PutMapping("/{id}/unpublish")
+    public ResponseEntity<String> unpublishTournament(@PathVariable Long id) {
+        return ResponseEntity.ok(tournamentService.unpublishTournament(id));
+    }
+
 }

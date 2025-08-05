@@ -11,7 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Tournament {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -28,4 +30,8 @@ public class Tournament {
 
     @Enumerated(EnumType.STRING)
     private TournamentType type;
+
+    @Column(name = "ispublished")
+    private boolean isPublished;
+
 }

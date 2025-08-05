@@ -23,6 +23,7 @@ const Navbar = () => {
           <Link to="/create-tournament" className="text-white bg-green-600 px-3 py-1 rounded hover:bg-green-700">
            + New Tournament
           </Link>
+          <Link to="/manage-tournaments">Manage Tournaments</Link>
           <button onClick={handleLogout} className="hover:text-red-400">Logout</button>
         </div>
       </div>
