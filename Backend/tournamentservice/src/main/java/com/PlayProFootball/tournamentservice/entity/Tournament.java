@@ -2,6 +2,7 @@ package com.PlayProFootball.tournamentservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "tournament")
@@ -17,10 +18,29 @@ public class Tournament {
 
     private String name;
     private String description;
-    private String location;
-    private String startDate;
-    private String endDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "state_id", nullable = false)
+    private State state;
+
+    private String city;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
     private TournamentType type;
+
+    @Column(name = "ispublished")
+    private boolean isPublished;
+    
+    @Column(name = "registration_deadline")
+    private LocalDate registrationDeadline;
+
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "oid")
+    private Organization organization;
+
+
 }

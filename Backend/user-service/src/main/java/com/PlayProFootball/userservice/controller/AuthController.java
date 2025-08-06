@@ -29,6 +29,8 @@ public class AuthController {
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
+                .email(request.getEmail())
+                .phoneno(request.getPhoneno())
                 .enabled(true)
                 .build();
 
@@ -53,18 +55,43 @@ public class AuthController {
     }
     
     @GetMapping("/profile")
-    public ResponseEntity<String> getUserProfile(@RequestHeader("Authorization") String token) {
-        if (!token.startsWith("Bearer ")) {
-            return ResponseEntity.badRequest().body("Invalid Token Format");
+    public ResponseEntity<?> getUserProfile(@RequestHeader("Authorization") String authHeader) {
+        // 1. Validate header format
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("Invalid Token Format");
         }
-        token = token.substring(7); // Remove "Bearer " prefix
 
-        if (jwtUtils.validateToken(token)) {
-            String username = jwtUtils.extractUsername(token);
-            return ResponseEntity.ok("Welcome " + username + " 👋");
-        } else {
-            return ResponseEntity.status(401).body("Invalid Token ❌");
+        String token = authHeader.substring(7);
+        // 2. Validate token
+        if (!jwtUtils.validateToken(token)) {
+            return ResponseEntity
+                    .status(401)
+                    .body("Invalid or expired token");
         }
+
+        // 3. Extract username from token
+        String username = jwtUtils.extractUsername(token);
+
+        // 4. Look up user in the database
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> 
+                    // 5. If not found, return 404
+                    new RuntimeException("User not found")
+                );
+
+        // 6. Map to DTO
+        UserProfileDto dto = UserProfileDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .phoneno(user.getPhoneno())
+                .role(user.getRole())
+                .build();
+
+        // 7. Return 200 + JSON body
+        return ResponseEntity.ok(dto);
     }
 
 
