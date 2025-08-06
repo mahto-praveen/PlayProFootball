@@ -33,5 +33,14 @@ public class Tournament {
 
     @Column(name = "ispublished")
     private boolean isPublished;
+    
+    @Column(name = "registration_deadline")
+    private LocalDate registrationDeadline;
+
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "oid")
+    private Organization organization;
+
 
 }

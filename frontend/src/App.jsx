@@ -2,13 +2,14 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import Profile from './pages/Profile';
+import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
-import TournamentPage from "./tournament/TournamentPage"; 
-import CreateTournamentForm from './tournament/CreateTournamentForm';
+import TournamentPage from "./tournament/TournamentPage";
 import CreateTournamentPage from "./tournament/CreateTournament";
 import ManageTournamentsPage from "./tournament/ManageTournamentsPage";
+import ManageTournaments from "./tournament/ManageTournaments";
+import EditTournamentPage from "./tournament/EditTournamentPage";
 
 function App() {
   return (
@@ -18,14 +19,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/tournaments" element={<TournamentPage />} />
-        <Route path="/manage-tournaments" element={<ManageTournamentsPage />} />
+        <Route path="/manage-tournaments1" element={<ManageTournamentsPage />} />
+        <Route path="/manage-tournaments" element={<ManageTournaments />} />
+        <Route path="/edit-tournament/:id" element={<EditTournamentPage />} />
 
-        <Route 
-          path="/tournaments/createP" 
-          element={
-                <CreateTournamentForm />
-                  } 
-        />
         <Route
           path="/dashboard"
           element={

@@ -3,73 +3,68 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTournaments, togglePublish } from '../redux/tournamentSlice';
 import { useNavigate } from 'react-router-dom';
 
-const ManageTournaments = () => {
+export default function ManageTournaments() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { tournaments, loading } = useSelector((state) => state.tournament);
-  const { token } = useSelector((state) => state.auth);
+
+  const { tournaments, loading } = useSelector((s) => s.tournament);
+  const token = useSelector((s) => s.auth.token);
+
+  // hardcoded for now; later extract from JWT or Redux
+  const organizerId = 1;
 
   useEffect(() => {
-    dispatch(getTournaments());
-  }, [dispatch]);
+    dispatch(getTournaments(organizerId));
+  }, [dispatch, organizerId]);
 
-  const handleTogglePublish = (tournament) => {
-    dispatch(togglePublish({ id: tournament.id, isPublished: tournament.isPublished, token }))
-      .then(() => dispatch(getTournaments()));
+  const handleToggle = (t) => {
+    dispatch(togglePublish({ id: t.id, isPublished: t.published }))
+      .then(() => dispatch(getTournaments(organizerId)));
   };
-
-  const handleEdit = (id) => {
-    navigate(`/edit-tournament/${id}`);
-  };
-
-  const organizerId = '1';
 
   return (
     <div className="p-4">
       <h2 className="text-2xl font-semibold mb-4">Manage Tournaments</h2>
       {loading ? (
-        <p>Loading tournaments...</p>
+        <p>Loading…</p>
       ) : (
         <div className="space-y-4">
-          {tournaments
-            .filter((t) => t.organizationId === organizerId)
-            .map((tournament) => (
-              <div
-                key={tournament.id}
-                className="p-4 border rounded-lg shadow-sm flex justify-between items-center"
-              >
-                <div>
-                  <h3 className="text-lg font-bold">{tournament.name}</h3>
-                  <p>Status: {tournament.status}</p>
-                  <p>
-                    Visibility:{' '}
-                    <span className={tournament.isPublished ? 'text-green-600' : 'text-red-600'}>
-                      {tournament.isPublished ? 'Published' : 'Unpublished'}
-                    </span>
-                  </p>
-                </div>
-                <div className="space-x-2">
-                  <button
-                    className="px-3 py-1 bg-yellow-500 text-white rounded"
-                    onClick={() => handleEdit(tournament.id)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className={`px-3 py-1 rounded ${
-                      tournament.isPublished ? 'bg-red-500' : 'bg-green-500'
-                    } text-white`}
-                    onClick={() => handleTogglePublish(tournament)}
-                  >
-                    {tournament.isPublished ? 'Unpublish' : 'Publish'}
-                  </button>
-                </div>
+          {tournaments.length === 0 && <p>No tournaments found.</p>}
+          {tournaments.map((t) => (
+            <div
+              key={t.id}
+              className="p-4 border rounded-lg shadow-sm flex justify-between items-center"
+            >
+              <div>
+                <h3 className="text-lg font-bold">{t.name}</h3>
+                <p>Status: {t.status}</p>
+                <p>
+                  Visibility:{' '}
+                  <span className={t.published ? 'text-green-600' : 'text-red-600'}>
+                    {t.published ? 'Published' : 'Unpublished'}
+                  </span>
+                </p>
               </div>
-            ))}
+              <div className="space-x-2">
+                <button
+                  className="px-3 py-1 bg-yellow-500 text-white rounded"
+                  onClick={() => navigate(`/edit-tournament/${t.id}`)}
+                >
+                  Edit
+                </button>
+                <button
+                  className={`px-3 py-1 rounded ${
+                    t.published ? 'bg-red-500' : 'bg-green-500'
+                  } text-white`}
+                  onClick={() => handleToggle(t)}
+                >
+                  {t.published ? 'Unpublish' : 'Publish'}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
   );
-};
-
-export default ManageTournaments;
+}

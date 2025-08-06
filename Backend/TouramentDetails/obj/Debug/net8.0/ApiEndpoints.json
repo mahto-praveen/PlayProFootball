@@ -1,0 +1,200 @@
+[
+  {
+    "ContainingType": "TournamentFixtures.Controllers.MatchesController",
+    "Method": "Update",
+    "RelativePath": "api/matches/{matchId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "matchId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "TournamentFixtures.DTOs.UpdateMatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TournamentFixtures.DTOs.MatchDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentFixtures.Controllers.MatchesController",
+    "Method": "GetFixtures",
+    "RelativePath": "api/tournaments/{tournamentId}/matches",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tournamentId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentFixtures.DTOs.MatchDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentFixtures.Controllers.MatchesController",
+    "Method": "Create",
+    "RelativePath": "api/tournaments/{tournamentId}/matches",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tournamentId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "TournamentFixtures.DTOs.CreateMatchDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TournamentFixtures.DTOs.MatchDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentFixtures.Controllers.MatchesController",
+    "Method": "Standings",
+    "RelativePath": "api/tournaments/{tournamentId}/standings",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tournamentId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentFixtures.DTOs.StandingDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentFixtures.Controllers.TeamsController",
+    "Method": "GetTeams",
+    "RelativePath": "api/tournaments/{tournamentId}/teams",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tournamentId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentFixtures.DTOs.TeamDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentFixtures.Controllers.TeamsController",
+    "Method": "AddTeam",
+    "RelativePath": "api/tournaments/{tournamentId}/teams",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tournamentId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "TournamentFixtures.DTOs.TeamDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TournamentFixtures.DTOs.TeamDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentFixtures.Controllers.TeamsController",
+    "Method": "RemoveTeam",
+    "RelativePath": "api/tournaments/{tournamentId}/teams/{teamId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tournamentId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "teamId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

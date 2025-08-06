@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loginAPI, registerAPI } from './authAPI';
+import {jwtDecode} from 'jwt-decode';
 
 export const login = createAsyncThunk('auth/login', loginAPI);
 export const register = createAsyncThunk('auth/register', registerAPI);
@@ -7,9 +8,11 @@ export const register = createAsyncThunk('auth/register', registerAPI);
 const initialState = {
   token: localStorage.getItem('token') || null,
   role: localStorage.getItem('role') || null,
+  organizationId: localStorage.getItem('organizationId') || null,
   loading: false,
   error: null,
 };
+
 
 const authSlice = createSlice({
   name: 'auth',
@@ -30,9 +33,12 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        const payload = jwtDecode(action.payload.token);
+        state.organizationId = payload.organizationId;
         state.role = action.payload.role;
         localStorage.setItem('token', action.payload.token);
         localStorage.setItem('role', action.payload.role);
+        localStorage.setItem('organizationId', payload.organizationId);
       })
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;

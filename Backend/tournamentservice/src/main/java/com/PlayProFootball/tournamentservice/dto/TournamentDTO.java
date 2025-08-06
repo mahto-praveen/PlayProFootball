@@ -1,8 +1,13 @@
 package com.PlayProFootball.tournamentservice.dto;
 
-import lombok.*;
 import java.time.LocalDate;
+
 import com.PlayProFootball.tournamentservice.entity.TournamentType;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -26,4 +31,10 @@ public class TournamentDTO {
 
     private String status;
     private boolean isPublished;
+    
+    private int organizationId;
+    
+    private LocalDate registrationDeadline;
+
+
 }
