@@ -5,11 +5,13 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import OrganizerRoute from "./components/OrganizerRoute";
 import TournamentPage from "./tournament/TournamentPage";
 import CreateTournamentPage from "./tournament/CreateTournament";
 import ManageTournamentsPage from "./tournament/ManageTournamentsPage";
 import ManageTournaments from "./tournament/ManageTournaments";
 import EditTournamentPage from "./tournament/EditTournamentPage";
+import TournamentTabsPage from "./tournament/TournamentTabsPage";
 
 function App() {
   return (
@@ -18,10 +20,6 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/tournaments" element={<TournamentPage />} />
-        <Route path="/manage-tournaments1" element={<ManageTournamentsPage />} />
-        <Route path="/manage-tournaments" element={<ManageTournaments />} />
-        <Route path="/edit-tournament/:id" element={<EditTournamentPage />} />
 
         <Route
           path="/dashboard"
@@ -39,14 +37,25 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
-          path="/tournaments/create"
+          path="/create-tournament"
           element={
-            <CreateTournamentPage />
+            <OrganizerRoute>
+              <CreateTournamentPage />
+            </OrganizerRoute>
+          }
+        />
+        <Route
+          path="/manage-tournaments"
+          element={
+            <OrganizerRoute>
+              <ManageTournamentsPage />
+            </OrganizerRoute>
           }
         />
 
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={<TournamentPage />} />
       </Routes>
     </>
   );

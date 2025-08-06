@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { fetchTournaments } from '../api/tournamentAPI';
 
 const TournamentPage = () => {
@@ -13,10 +14,18 @@ const TournamentPage = () => {
   const [cityFilter, setCityFilter]     = useState('');
   const [typeFilter, setTypeFilter]     = useState('');
 
+  const { token, organizationId } = useSelector(state => state.auth);
+
+
   useEffect(() => {
     (async () => {
       try {
-        setTournaments(await fetchTournaments());
+            setTournaments(await fetchTournaments(organizationId || null, token));
+
+            console.log("Token:", token);
+            console.log("Org ID:", organizationId);
+
+
         // fetch states for datalist
         const res = await axios.get('http://localhost:8082/api/states');
         setStates(res.data.map(s => s.name));
@@ -24,7 +33,7 @@ const TournamentPage = () => {
         console.error("Error loading data:", err);
       }
     })();
-  }, []);
+  }, [token, organizationId]);
 
   // Core filter function
   const filterTournaments = (status) => 

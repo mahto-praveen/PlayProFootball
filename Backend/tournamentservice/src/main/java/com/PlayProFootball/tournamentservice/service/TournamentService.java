@@ -3,12 +3,10 @@ package com.PlayProFootball.tournamentservice.service;
 import com.PlayProFootball.tournamentservice.dto.TournamentDTO;
 import com.PlayProFootball.tournamentservice.entity.Tournament;
 import com.PlayProFootball.tournamentservice.repository.TournamentRepository;
-import com.PlayProFootball.tournamentservice.util.JwtUtil;
 
 import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -22,8 +20,6 @@ public class TournamentService {
     @Autowired
     private TournamentRepository tournamentRepository;
 
-    @Autowired
-    private JwtUtil jwtUtil;
 
     // Save a tournament
     public Tournament saveTournament(Tournament tournament) {
@@ -79,11 +75,6 @@ public class TournamentService {
     public TournamentDTO updateTournament(Long id, TournamentDTO dto, Principal principal) {
         Tournament existing = findById(id);
 
-        // Extract org ID from JWT
-        Integer myOrgId = jwtUtil.extractOrganizationId(principal);
-        if (existing.getOrganization().getOid() != myOrgId) {
-            throw new AccessDeniedException("Not allowed to edit this tournament");
-        }
 
         // Copy editable fields
         existing.setName(dto.getName());

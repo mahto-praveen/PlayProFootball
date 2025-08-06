@@ -17,7 +17,7 @@ namespace TournamentFixtures.Models
         public bool IsPublished { get; set; }
         public DateTime? RegistrationDeadline { get; set; }
 
-        public ICollection<Team> Teams { get; set; }
+        public ICollection<TournamentTeam> TournamentTeams { get; set; }
         public ICollection<Match> Matches { get; set; }
     }
 }

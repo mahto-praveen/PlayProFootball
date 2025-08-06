@@ -9,6 +9,6 @@ namespace TournamentFixtures.Models
         public string ManagerName { get; set; }
         public string ContactNo { get; set; }
 
-        public ICollection<Tournament> Tournaments { get; set; }
+        public ICollection<TournamentTeam> TournamentTeams { get; set; }
     }
 }

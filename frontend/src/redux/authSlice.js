@@ -35,7 +35,7 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         const payload = jwtDecode(action.payload.token);
         state.organizationId = payload.organizationId;
-        state.role = action.payload.role;
+        state.role = action.payload;
         localStorage.setItem('token', action.payload.token);
         localStorage.setItem('role', action.payload.role);
         localStorage.setItem('organizationId', payload.organizationId);
@@ -43,7 +43,7 @@ const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
-        state.role = action.payload.role;
+        state.role = action.payload;
         localStorage.setItem('token', action.payload.token);
         localStorage.setItem('role', action.payload.role);
       })

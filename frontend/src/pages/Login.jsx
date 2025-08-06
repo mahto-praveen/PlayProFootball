@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { loading, error } = useSelector((state) => state.auth);
+
+  // Grab message from register redirect (if any)
+  const [successMessage, setSuccessMessage] = useState("");
+  useEffect(() => {
+    if (location.state?.successMessage) {
+      setSuccessMessage(location.state.successMessage);
+      // Clear so it doesn't show again on future navigations
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, navigate]);
 
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    role: "USER"
+    role: "USER",
   });
 
   const handleChange = (e) => {
@@ -29,7 +40,14 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-500 to-purple-600">
       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">Login</h2>
+
+        {/* Success banner */}
+        {successMessage && (
+          <p className="bg-green-100 text-green-800 p-3 rounded-md mb-4 text-center">
+            {successMessage}
+          </p>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <input
@@ -37,6 +55,8 @@ export default function Login() {
             name="username"
             placeholder="Username"
             onChange={handleChange}
+            value={formData.username}
+            required
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
@@ -44,11 +64,14 @@ export default function Login() {
             name="password"
             placeholder="Password"
             onChange={handleChange}
+            value={formData.password}
+            required
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <select
             name="role"
             onChange={handleChange}
+            value={formData.role}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="USER">User</option>
@@ -64,6 +87,16 @@ export default function Login() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+
+          <p className="text-sm text-center mt-2">
+            Don’t have an account?{" "}
+            <span
+              onClick={() => navigate("/register")}
+              className="text-blue-600 hover:underline cursor-pointer"
+            >
+              Register here
+            </span>
+          </p>
         </form>
       </div>
     </div>
