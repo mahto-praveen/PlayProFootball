@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   fetchTournaments,
   publishTournament,
@@ -8,8 +9,12 @@ import {
 const ManageTournamentsPage = () => {
   const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token") ?? "";
+  const orgId = parseInt(localStorage.getItem("organizationId") ?? "-1");
 
+  const navigate = useNavigate();
+
+  
   useEffect(() => {
     loadTournaments();
   }, []);
@@ -48,6 +53,10 @@ const ManageTournamentsPage = () => {
     }
   };
 
+  const handleEdit = (id) => {
+    navigate(`/edit-tournament/${id}`);
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Manage Tournaments</h2>
@@ -62,7 +71,7 @@ const ManageTournamentsPage = () => {
               <th className="border px-3 py-2">Start</th>
               <th className="border px-3 py-2">End</th>
               <th className="border px-3 py-2">Status</th>
-              <th className="border px-3 py-2">Action</th>
+              <th className="border px-3 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -91,6 +100,12 @@ const ManageTournamentsPage = () => {
                       Publish
                     </button>
                   )}
+                  <button
+                    onClick={() => handleEdit(tournament.id)}
+                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                  >
+                    Edit
+                  </button>
                 </td>
               </tr>
             ))}

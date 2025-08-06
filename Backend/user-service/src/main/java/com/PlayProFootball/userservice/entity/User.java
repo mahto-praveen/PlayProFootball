@@ -20,4 +20,7 @@ public class User {
 
     private String email;
     private Long phoneno;
+    @Column(name = "organization_id")
+    private Long organizationId;
+
 }

@@ -31,6 +31,7 @@ public class AuthController {
                 .role(request.getRole())
                 .email(request.getEmail())
                 .phoneno(request.getPhoneno())
+                .organizationId(request.getOrganizationId())
                 .enabled(true)
                 .build();
 

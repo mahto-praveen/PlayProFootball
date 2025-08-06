@@ -1,43 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { fetchTournaments } from '../api/tournamentAPI';
 
 const TournamentPage = () => {
-  const [tournaments, setTournaments]   = useState([]);
-  const [states, setStates]             = useState([]);
+  const [tournaments, setTournaments] = useState([]);
+  const [states, setStates] = useState([]);
 
-  // Filter states
-  const [nameFilter, setNameFilter]     = useState('');
-  const [dateFilter, setDateFilter]     = useState('');
-  const [stateFilter, setStateFilter]   = useState('');
-  const [cityFilter, setCityFilter]     = useState('');
-  const [typeFilter, setTypeFilter]     = useState('');
+  const [nameFilter, setNameFilter] = useState('');
+  const [dateFilter, setDateFilter] = useState('');
+  const [stateFilter, setStateFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
 
-  const { token, organizationId } = useSelector(state => state.auth);
-
+  const { token, organizationId, role } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
       try {
-            setTournaments(await fetchTournaments(organizationId || null, token));
+        if (!token) return;
 
-            console.log("Token:", token);
-            console.log("Org ID:", organizationId);
+        const tournamentsData = await fetchTournaments(role === 2 ? organizationId : null, token);
+        setTournaments(tournamentsData);
 
-
-        // fetch states for datalist
         const res = await axios.get('http://localhost:8082/api/states');
-        setStates(res.data.map(s => s.name));
+        setStates(res.data.map((s) => s.name));
       } catch (err) {
-        console.error("Error loading data:", err);
+        console.error('Error loading data:', err);
       }
     })();
-  }, [token, organizationId]);
+  }, [token, organizationId, role]);
 
-  // Core filter function
-  const filterTournaments = (status) => 
-    tournaments.filter(t => {
+  const filterTournaments = (status) =>
+    tournaments.filter((t) => {
       if (t.status.toLowerCase() !== status.toLowerCase()) return false;
       if (nameFilter && !t.name.toLowerCase().includes(nameFilter.toLowerCase())) return false;
       if (dateFilter) {
@@ -53,64 +50,24 @@ const TournamentPage = () => {
 
   return (
     <div className="bg-gray-900 min-h-screen text-white">
-      {/* Hero */}
       <section className="py-10 px-4 sm:px-10 bg-gradient-to-r from-green-800 to-gray-800">
         <h1 className="text-4xl font-bold mb-4">🏆 Explore Football Tournaments</h1>
       </section>
 
       <div className="flex flex-col lg:flex-row gap-6 px-4 sm:px-10 py-8">
-        {/* Sidebar Filters */}
         <aside className="lg:w-1/4 bg-gray-800 p-6 rounded-xl">
           <h2 className="text-xl font-semibold mb-4">🔍 Filters</h2>
           <div className="flex flex-col gap-4">
-            {/* By Name */}
-            <input
-              type="text"
-              placeholder="By Name"
-              className="px-3 py-2 rounded text-black"
-              value={nameFilter}
-              onChange={e => setNameFilter(e.target.value)}
-            />
-
-            {/* Date */}
-            <input
-              type="date"
-              className="px-3 py-2 rounded text-black"
-              value={dateFilter}
-              onChange={e => setDateFilter(e.target.value)}
-            />
-
-            {/* State (searchable) */}
+            <input type="text" placeholder="By Name" className="px-3 py-2 rounded text-black" value={nameFilter} onChange={(e) => setNameFilter(e.target.value)} />
+            <input type="date" className="px-3 py-2 rounded text-black" value={dateFilter} onChange={(e) => setDateFilter(e.target.value)} />
             <div>
-              <input
-                list="states"
-                placeholder="Select State"
-                className="w-full px-3 py-2 rounded text-black"
-                value={stateFilter}
-                onChange={e => setStateFilter(e.target.value)}
-              />
+              <input list="states" placeholder="Select State" className="w-full px-3 py-2 rounded text-black" value={stateFilter} onChange={(e) => setStateFilter(e.target.value)} />
               <datalist id="states">
-                {states.map((s) => (
-                  <option key={s} value={s} />
-                ))}
+                {states.map((s) => (<option key={s} value={s} />))}
               </datalist>
             </div>
-
-            {/* City (free‐form) */}
-            <input
-              type="text"
-              placeholder="By City"
-              className="px-3 py-2 rounded text-black"
-              value={cityFilter}
-              onChange={e => setCityFilter(e.target.value)}
-            />
-
-            {/* Type */}
-            <select
-              className="px-3 py-2 rounded text-black"
-              value={typeFilter}
-              onChange={e => setTypeFilter(e.target.value)}
-            >
+            <input type="text" placeholder="By City" className="px-3 py-2 rounded text-black" value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} />
+            <select className="px-3 py-2 rounded text-black" value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
               <option value="">Type</option>
               <option value="FIVE_VS_FIVE">5v5</option>
               <option value="SEVEN_VS_SEVEN">7v7</option>
@@ -118,22 +75,14 @@ const TournamentPage = () => {
               <option value="KNOCKOUT">Knockout</option>
               <option value="ROUND_ROBIN">Round Robin</option>
             </select>
-
-            {/* Apply Filters */}
-            <button
-              className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg"
-              onClick={() => { /* simply re-renders with current filters */ }}
-            >
-              Apply Filters
-            </button>
+            <button className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg" onClick={() => {}}>Apply Filters</button>
           </div>
         </aside>
 
-        {/* Main Content */}
         <main className="lg:w-3/4 flex flex-col gap-10">
-          <Section title="🟡 Upcoming" data={filterTournaments("Upcoming")} />
-          <Section title="🟢 Ongoing"  data={filterTournaments("Ongoing")}  />
-          <Section title="🔴 Finished" data={filterTournaments("Finished")} />
+          <Section title="🟡 Upcoming" data={filterTournaments('Upcoming')} />
+          <Section title="🟢 Ongoing" data={filterTournaments('Ongoing')} />
+          <Section title="🔴 Finished" data={filterTournaments('Finished')} />
         </main>
       </div>
     </div>
@@ -144,26 +93,20 @@ const Section = ({ title, data }) => (
   <section>
     <h2 className="text-2xl font-bold mb-4">{title} Tournaments</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {data.length
-        ? data.map(t => <TournamentCard key={t.id} tournament={t} />)
-        : <p className="text-gray-400">No tournaments found.</p>}
+      {data.length ? data.map((t) => <TournamentCard key={t.id} tournament={t} />) : <p className="text-gray-400">No tournaments found.</p>}
     </div>
   </section>
 );
 
 const TournamentCard = ({ tournament }) => {
   const { name, city, stateName, startDate, endDate, status, type } = tournament;
-  const statusColor =
-    status === 'Upcoming' ? 'border-yellow-500' :
-    status === 'Ongoing'  ? 'border-green-500'  : 'border-red-500';
+  const statusColor = status === 'Upcoming' ? 'border-yellow-500' : status === 'Ongoing' ? 'border-green-500' : 'border-red-500';
 
   return (
     <div className={`bg-gray-800 border-l-4 ${statusColor} p-4 rounded-xl shadow-md`}>
       <h3 className="text-xl font-semibold mb-2">{name}</h3>
       <p className="text-sm text-gray-300 mb-1">📍 {city}, {stateName}</p>
-      <p className="text-sm text-gray-400 mb-1">
-        🗓️ {new Date(startDate).toDateString()} → {new Date(endDate).toDateString()}
-      </p>
+      <p className="text-sm text-gray-400 mb-1">🗓️ {new Date(startDate).toDateString()} → {new Date(endDate).toDateString()}</p>
       <span className="text-xs uppercase text-gray-500">{type.replace(/_/g, ' ')}</span>
     </div>
   );
