@@ -1,9 +1,12 @@
 using System;
 
-namespace TournamentFixtures.DTOs
+namespace TournamentDetails.DTOs
 {
     public record CreateMatchDto(
         int TeamAId,
         int TeamBId,
-        DateTime ScheduledAt);
+        DateTime ScheduledAt,
+        string Stadium,       
+        string MatchType      
+    );
 }

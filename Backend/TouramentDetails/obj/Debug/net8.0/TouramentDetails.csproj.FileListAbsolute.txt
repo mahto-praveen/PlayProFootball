@@ -41,3 +41,14 @@ D:\Project\PlayProFootball\Backend\TouramentDetails\obj\Debug\net8.0\refint\Tour
 D:\Project\PlayProFootball\Backend\TouramentDetails\obj\Debug\net8.0\TouramentDetails.pdb
 D:\Project\PlayProFootball\Backend\TouramentDetails\obj\Debug\net8.0\TouramentDetails.genruntimeconfig.cache
 D:\Project\PlayProFootball\Backend\TouramentDetails\obj\Debug\net8.0\ref\TouramentDetails.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Common.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Common.Abstractions.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Common.Http.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Connector.Abstractions.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Connector.ConnectorBase.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Discovery.Abstractions.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Discovery.ClientBase.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Discovery.ClientCore.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Discovery.Eureka.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\Steeltoe.Extensions.Configuration.Abstractions.dll
+D:\Project\PlayProFootball\Backend\TouramentDetails\bin\Debug\net8.0\System.Reflection.MetadataLoadContext.dll

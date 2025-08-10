@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TournamentFixtures.Models
+namespace TournamentDetails.Models
 {
     public class Tournament
     {

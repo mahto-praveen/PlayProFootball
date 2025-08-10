@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TournamentFixtures.Data;
-using TournamentFixtures.DTOs;
-using TournamentFixtures.Models;
+using TournamentDetails.Data;
+using TournamentDetails.DTOs;
+using TournamentDetails.Models;
 
-namespace TournamentFixtures.Controllers
+namespace TournamentDetails.Controllers
 {
     [ApiController]
     [Route("api/tournaments/{tournamentId}/teams")]

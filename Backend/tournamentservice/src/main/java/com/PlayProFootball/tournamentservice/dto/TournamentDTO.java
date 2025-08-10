@@ -32,7 +32,8 @@ public class TournamentDTO {
     private String status;
     private boolean isPublished;
     
-    private int organizationId;
+    private Integer organizationId;
+
     
     private LocalDate registrationDeadline;
 

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TournamentFixtures.DTOs;
-using TournamentFixtures.Services;
+using TournamentDetails.DTOs;
+using TournamentDetails.Services;
 
 namespace TournamentFixtures.Controllers
 {

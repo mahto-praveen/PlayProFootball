@@ -7,12 +7,11 @@ export const register = createAsyncThunk('auth/register', registerAPI);
 
 const initialState = {
   token: localStorage.getItem('token') || null,
-  role: localStorage.getItem('role') || null,
+  role: localStorage.getItem('role') ? parseInt(localStorage.getItem('role')) : null,
   organizationId: localStorage.getItem('organizationId') || null,
   loading: false,
   error: null,
 };
-
 
 const authSlice = createSlice({
   name: 'auth',
@@ -21,12 +20,17 @@ const authSlice = createSlice({
     logout: (state) => {
       state.token = null;
       state.role = null;
+      state.organizationId = null;
       localStorage.clear();
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, register.pending, (state) => {
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -47,7 +51,11 @@ const authSlice = createSlice({
         localStorage.setItem('token', action.payload.token);
         localStorage.setItem('role', action.payload.role);
       })
-      .addCase(login.rejected, register.rejected, (state, action) => {
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(register.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

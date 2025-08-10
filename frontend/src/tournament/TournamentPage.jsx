@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchTournaments } from '../api/tournamentAPI';
+import { Link } from 'react-router-dom';
+
 
 const TournamentPage = () => {
   const [tournaments, setTournaments] = useState([]);
@@ -14,15 +15,19 @@ const TournamentPage = () => {
   const [cityFilter, setCityFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
 
-  const { token, organizationId, role } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
+  // ✅ Get from localStorage directly
+  const token = localStorage.getItem('token');
+  const role = parseInt(localStorage.getItem('role'));
+  const organizationId = localStorage.getItem('organizationId');
 
   useEffect(() => {
     (async () => {
       try {
         if (!token) return;
 
-        const tournamentsData = await fetchTournaments(role === 2 ? organizationId : null, token);
+        const tournamentsData = await fetchTournaments(token, role == 2 && organizationId ? organizationId : null);
         setTournaments(tournamentsData);
 
         const res = await axios.get('http://localhost:8082/api/states');
@@ -99,16 +104,18 @@ const Section = ({ title, data }) => (
 );
 
 const TournamentCard = ({ tournament }) => {
-  const { name, city, stateName, startDate, endDate, status, type } = tournament;
+  const { id, name, city, stateName, startDate, endDate, status, type } = tournament;
   const statusColor = status === 'Upcoming' ? 'border-yellow-500' : status === 'Ongoing' ? 'border-green-500' : 'border-red-500';
 
   return (
+    <Link to={`/tournament-details/${id}`} className="block">
     <div className={`bg-gray-800 border-l-4 ${statusColor} p-4 rounded-xl shadow-md`}>
       <h3 className="text-xl font-semibold mb-2">{name}</h3>
       <p className="text-sm text-gray-300 mb-1">📍 {city}, {stateName}</p>
       <p className="text-sm text-gray-400 mb-1">🗓️ {new Date(startDate).toDateString()} → {new Date(endDate).toDateString()}</p>
       <span className="text-xs uppercase text-gray-500">{type.replace(/_/g, ' ')}</span>
     </div>
+    </Link>
   );
 };
 

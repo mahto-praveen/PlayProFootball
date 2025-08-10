@@ -70,7 +70,7 @@ export default function Login() {
           />
 
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && <p className="text-red-500 text-sm text-center">Invalid credentials</p>}
 
           <button
             type="submit"

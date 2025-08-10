@@ -13,38 +13,35 @@ const MatchScheduler = ({ tournamentId }) => {
   };
 
   useEffect(() => {
+    debugger
     fetchMatches();
+    debugger
   }, [tournamentId]);
 
   return (
     <div>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Scheduled Matches</h2>
-        <button className="bg-green-500 text-white px-4 py-2" onClick={() => setOpen(true)}>Add Match</button>
+        <button className="bg-green-500 text-white px-4 py-2" onClick={() => { setSelectedMatch(null); setOpen(true); }}>Add Match</button>
       </div>
+
       <ul className="mt-4">
         {matches.map(m => (
           <li
             key={m.id}
-            className="p-2 border flex justify-between"
-            onClick={() => {
-              setSelectedMatch(m);
-              setOpen(true);
-            }}
+            className="p-2 border flex justify-between cursor-pointer"
+            onClick={() => { setSelectedMatch(m); setOpen(true); }}
           >
-            {m.teamAName} vs {m.teamBName} on {m.date}
+            {m.teamAId} vs {m.teamBId} on {new Date(m.scheduledAt).toLocaleString()} — {m.status}
           </li>
         ))}
       </ul>
+
       {open && (
         <MatchModal
           tournamentId={tournamentId}
           match={selectedMatch}
-          onClose={() => {
-            setOpen(false);
-            setSelectedMatch(null);
-            fetchMatches();
-          }}
+          onClose={() => { setOpen(false); setSelectedMatch(null); fetchMatches(); }}
         />
       )}
     </div>

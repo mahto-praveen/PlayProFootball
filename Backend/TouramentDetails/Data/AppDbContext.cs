@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using TournamentFixtures.Models;
+using TournamentDetails.Models;
 
-namespace TournamentFixtures.Data
+namespace TournamentDetails.Data
 {
     public class AppDbContext : DbContext
     {
@@ -11,6 +11,7 @@ namespace TournamentFixtures.Data
         public DbSet<Team> Teams { get; set; }
         public DbSet<Match> Matches { get; set; }
         public DbSet<TournamentTeam> TournamentTeams { get; set; }
+        public DbSet<MatchScoreDetail> MatchScoreDetails { get; set; }  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,30 +33,43 @@ namespace TournamentFixtures.Data
                 entity.Property(e => e.RegistrationDeadline).HasColumnName("registration_deadline");
             });
 
-            // Team table mapping (optional if table name = class name and default conventions used)
+            // Team table mapping
             modelBuilder.Entity<Team>(entity =>
             {
                 entity.ToTable("teams");
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).HasColumnName("id");
                 entity.Property(e => e.Name).HasColumnName("name");
+                entity.Property(e => e.ManagerName).HasColumnName("managerName");
+                entity.Property(e => e.ContactNo).HasColumnName("contactNo");
             });
 
-            // Match table mapping
+            // Match table mapping with new fields
             modelBuilder.Entity<Match>(entity =>
             {
                 entity.ToTable("matches");
                 entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.TournamentId).HasColumnName("tournament_id");
-                entity.Property(e => e.TeamAId).HasColumnName("team_a_id");
-                entity.Property(e => e.TeamBId).HasColumnName("team_b_id");
+                entity.Property(e => e.Id).HasColumnName("Id");
+                entity.Property(e => e.TournamentId).HasColumnName("TournamentId");
+                entity.Property(e => e.TeamAId).HasColumnName("TeamAId");
+                entity.Property(e => e.TeamBId).HasColumnName("TeamBId");
                 entity.Property(e => e.ScheduledAt).HasColumnName("ScheduledAt");
-                entity.Property(e => e.ScoreA).HasColumnName("score_a");
-                entity.Property(e => e.ScoreB).HasColumnName("score_b");
+                entity.Property(e => e.Stadium).HasColumnName("Stadium");           
+                entity.Property(e => e.MatchType).HasColumnName("MatchType");       
+                entity.Property(e => e.ScoreA).HasColumnName("ScoreA");
+                entity.Property(e => e.ScoreB).HasColumnName("ScoreB");
+                entity.Property(e => e.Status).HasColumnName("Status");
+                entity.Property(e => e.WinnerTeamId).HasColumnName("WinnerTeamId"); 
             });
 
-            // Match foreign keys (TeamA and TeamB)
+            // Foreign key for WinnerTeamId
+            modelBuilder.Entity<Match>()
+                .HasOne(m => m.WinnerTeam)
+                .WithMany()
+                .HasForeignKey(m => m.WinnerTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Foreign keys for TeamA and TeamB
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.TeamA)
                 .WithMany()
@@ -68,12 +82,43 @@ namespace TournamentFixtures.Data
                 .HasForeignKey(m => m.TeamBId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Foreign key for Tournament in Match
             modelBuilder.Entity<Match>()
                 .HasOne(m => m.Tournament)
                 .WithMany(t => t.Matches)
                 .HasForeignKey(m => m.TournamentId);
 
-            //  Explicit Many-to-Many via TournamentTeam
+            // MatchScoreDetail table mapping (new)
+            modelBuilder.Entity<MatchScoreDetail>(entity =>
+            {
+                entity.ToTable("match_score_details");
+                entity.HasKey(e => e.ScoreId);
+
+                entity.Property(e => e.ScoreId).HasColumnName("ScoreId");
+                entity.Property(e => e.MatchId).HasColumnName("MatchId");
+                entity.Property(e => e.TournamentId).HasColumnName("TournamentId");
+                entity.Property(e => e.TeamId).HasColumnName("TeamId");
+                entity.Property(e => e.GoalsScored).HasColumnName("GoalsScored");
+                entity.Property(e => e.Passes).HasColumnName("Passes");
+                entity.Property(e => e.Fouls).HasColumnName("Fouls");
+                entity.Property(e => e.Offside).HasColumnName("Offside");
+                entity.Property(e => e.YellowCards).HasColumnName("YellowCards");
+                entity.Property(e => e.RedCards).HasColumnName("RedCards");
+
+                entity.HasOne(msd => msd.Match)
+                    .WithMany()
+                    .HasForeignKey(msd => msd.MatchId);
+
+                entity.HasOne(msd => msd.Tournament)
+                    .WithMany()
+                    .HasForeignKey(msd => msd.TournamentId);
+
+                entity.HasOne(msd => msd.Team)
+                    .WithMany()
+                    .HasForeignKey(msd => msd.TeamId);
+            });
+
+            // TournamentTeam many-to-many mapping
             modelBuilder.Entity<TournamentTeam>()
                 .ToTable("TournamentTeams")
                 .HasKey(tt => new { tt.TournamentId, tt.TeamId });

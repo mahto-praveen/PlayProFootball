@@ -27,7 +27,7 @@ const Navbar = () => {
           <Link to="/tournaments" className="hover:text-yellow-300">Tournaments</Link>
 
           {/* Organizer-specific options */}
-          {role === 2 && (
+          {role == 2 && (
             <>
               <Link to="/create-tournament" className="bg-green-600 px-3 py-1 rounded hover:bg-green-700">
                 + New Tournament

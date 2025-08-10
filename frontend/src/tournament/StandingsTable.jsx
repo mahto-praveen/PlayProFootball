@@ -10,24 +10,30 @@ const StandingsTable = ({ tournamentId }) => {
 
   return (
     <div>
-      <h2 className="text-xl font-semibold">Standings</h2>
-      <table className="table-auto w-full mt-4 border">
+      <h2 className="text-xl font-semibold mb-2">Standings</h2>
+      <table className="table-auto w-full border">
         <thead>
           <tr className="bg-gray-200">
             <th className="p-2 border">Team</th>
             <th className="p-2 border">Played</th>
-            <th className="p-2 border">Wins</th>
-            <th className="p-2 border">Losses</th>
+            <th className="p-2 border">Won</th>
+            <th className="p-2 border">Drawn</th>
+            <th className="p-2 border">Lost</th>
+            <th className="p-2 border">GF</th>
+            <th className="p-2 border">GA</th>
             <th className="p-2 border">Points</th>
           </tr>
         </thead>
         <tbody>
-          {standings.map((s, index) => (
-            <tr key={index}>
+          {standings.map((s, idx) => (
+            <tr key={idx}>
               <td className="p-2 border">{s.teamName}</td>
               <td className="p-2 border">{s.played}</td>
-              <td className="p-2 border">{s.wins}</td>
-              <td className="p-2 border">{s.losses}</td>
+              <td className="p-2 border">{s.won}</td>
+              <td className="p-2 border">{s.drawn}</td>
+              <td className="p-2 border">{s.lost}</td>
+              <td className="p-2 border">{s.goalsFor}</td>
+              <td className="p-2 border">{s.goalsAgainst}</td>
               <td className="p-2 border">{s.points}</td>
             </tr>
           ))}

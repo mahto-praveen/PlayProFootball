@@ -1,18 +1,17 @@
 package com.PlayProFootball.tournamentservice.service;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.PlayProFootball.tournamentservice.dto.TournamentDTO;
 import com.PlayProFootball.tournamentservice.entity.Tournament;
 import com.PlayProFootball.tournamentservice.repository.TournamentRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.security.Principal;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TournamentService {
@@ -72,7 +71,7 @@ public class TournamentService {
     }
 
     // Update tournament with ownership validation
-    public TournamentDTO updateTournament(Long id, TournamentDTO dto, Principal principal) {
+    public TournamentDTO updateTournament(Long id, TournamentDTO dto) {
         Tournament existing = findById(id);
 
 
@@ -84,13 +83,11 @@ public class TournamentService {
         existing.setEndDate(dto.getEndDate());
         existing.setType(dto.getType());
         existing.setRegistrationDeadline(dto.getRegistrationDeadline());
-        // Add more editable fields here if needed
 
         Tournament saved = tournamentRepository.save(existing);
         return convertToDTO(saved);
     }
 
-    // Convert entity to DTO and determine status
     private TournamentDTO convertToDTO(Tournament t) {
         LocalDate today = LocalDate.now();
         String status;
@@ -103,12 +100,19 @@ public class TournamentService {
             status = "Finished";
         }
 
+        int stateId = 0;
+        String stateName = null;
+        if (t.getState() != null) {
+            stateId = t.getState().getId();
+            stateName = t.getState().getName();
+        }
+
         return TournamentDTO.builder()
                 .id(t.getId())
                 .name(t.getName())
                 .description(t.getDescription())
-                .stateId(t.getState().getId())
-                .stateName(t.getState().getName())
+                .stateId(stateId)
+                .stateName(stateName)
                 .city(t.getCity())
                 .startDate(t.getStartDate())
                 .endDate(t.getEndDate())
@@ -119,4 +123,5 @@ public class TournamentService {
                 .organizationId(t.getOrganization() != null ? t.getOrganization().getOid() : null)
                 .build();
     }
+
 }

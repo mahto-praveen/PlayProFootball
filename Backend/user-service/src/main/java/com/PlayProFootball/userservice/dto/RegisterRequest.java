@@ -14,4 +14,5 @@ public class RegisterRequest {
     private String email;
     private Long phoneno;
     private Long organizationId;
+    private String organizationName;
 }

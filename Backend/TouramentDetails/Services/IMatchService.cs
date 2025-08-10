@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TournamentFixtures.DTOs;
+using TournamentDetails.DTOs;
 
-namespace TournamentFixtures.Services
+namespace TournamentDetails.Services
 {
     public interface IMatchService
     {

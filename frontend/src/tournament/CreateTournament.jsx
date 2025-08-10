@@ -4,7 +4,11 @@ import { createTournament } from '../api/tournamentAPI';
 import axios from 'axios';
 
 export default function CreateTournament() {
-  const testToken = "mytoken";
+  // const testToken = "mytoken";
+  const token = localStorage.getItem('token');
+  const organizationId = localStorage.getItem('organizationId');
+      console.log("Organization ID from localStorage:", organizationId);
+
   const navigate = useNavigate();
   
   // Form state
@@ -16,7 +20,7 @@ export default function CreateTournament() {
   startDate: '',
   endDate: '',
   type: '',
-  registrationDate: '',
+  registrationDeadline: '',
 });
 
 
@@ -44,6 +48,7 @@ export default function CreateTournament() {
   };
 
   const handleSubmit = async e => {
+    console.log("Organization ID from localStorage:", organizationId);
     e.preventDefault();
       const payload = {
       name: form.name,
@@ -53,14 +58,14 @@ export default function CreateTournament() {
       startDate: form.startDate,
       endDate: form.endDate,
       type: form.type,
-      registrationDate: form.registrationDate,
-      organizationId: 1 // will be replaced with actual org ID later
+      registrationDeadline: form.registrationDeadline,
+      organization: organizationId ? { oid: parseInt(organizationId) } : null,  // will be replaced with actual org ID later
       };
 
 
     try {
-      // await createTournament(payload, localStorage.getItem('token'));
-      await createTournament(payload, testToken);
+      await createTournament(payload, localStorage.getItem('token'));
+      // await createTournament(payload, token);
       navigate('/tournaments');
     } catch (err) {
       console.error('Create failed', err);
@@ -157,10 +162,10 @@ export default function CreateTournament() {
             <div>
               <label className="block text-sm font-medium mb-1">Registration Date</label>
               <input
-                name="registrationDate"
+                name="registrationDeadline"
                 type="date"
                 required
-                value={form.registrationDate}
+                value={form.registrationDeadline}
                 onChange={handleChange}
                 className="w-full border border-gray-300 rounded p-2"
               />
