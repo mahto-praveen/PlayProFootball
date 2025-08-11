@@ -23,7 +23,5 @@ namespace TournamentDetails.Models
         public int? ScoreB { get; set; }
         public string Status { get; set; }
 
-        public int? WinnerTeamId { get; set; }      
-        public Team WinnerTeam { get; set; }
     }
 }

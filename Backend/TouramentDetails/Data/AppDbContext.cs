@@ -59,15 +59,9 @@ namespace TournamentDetails.Data
                 entity.Property(e => e.ScoreA).HasColumnName("ScoreA");
                 entity.Property(e => e.ScoreB).HasColumnName("ScoreB");
                 entity.Property(e => e.Status).HasColumnName("Status");
-                entity.Property(e => e.WinnerTeamId).HasColumnName("WinnerTeamId"); 
+                
             });
 
-            // Foreign key for WinnerTeamId
-            modelBuilder.Entity<Match>()
-                .HasOne(m => m.WinnerTeam)
-                .WithMany()
-                .HasForeignKey(m => m.WinnerTeamId)
-                .OnDelete(DeleteBehavior.Restrict);
 
             // Foreign keys for TeamA and TeamB
             modelBuilder.Entity<Match>()

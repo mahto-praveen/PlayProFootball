@@ -532,7 +532,7 @@
           },
           "teamAId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "teamAName": {
             "type": "string",
@@ -540,7 +540,7 @@
           },
           "teamBId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
           },
           "teamBName": {
             "type": "string",
@@ -560,24 +560,17 @@
           },
           "scoreA": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "scoreB": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "status": {
             "type": "string",
             "nullable": true
           },
-          "winnerTeamId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "winnerTeamName": {
+          "winnerName": {
             "type": "string",
             "nullable": true
           }

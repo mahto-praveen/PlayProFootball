@@ -15,29 +15,35 @@ namespace TournamentDetails.Services
 
         public MatchService(AppDbContext db) => _db = db;
 
+        private string GetWinnerName(Match match)
+        {
+            if (match.ScoreA > match.ScoreB) return match.TeamA?.Name;
+            if (match.ScoreB > match.ScoreA) return match.TeamB?.Name;
+            return "Draw";
+        }
+
         public async Task<IEnumerable<MatchDto>> GetFixturesAsync(long tournamentId)
         {
-            return await _db.Matches
+            var matches = await _db.Matches
                 .Include(m => m.TeamA)
                 .Include(m => m.TeamB)
-                .Include(m => m.WinnerTeam)
                 .Where(m => m.TournamentId == tournamentId)
-                .Select(m => new MatchDto(
-                    m.Id,
-                    m.TeamAId,
-                    m.TeamA.Name,
-                    m.TeamBId,
-                    m.TeamB.Name,
-                    m.ScheduledAt,
-                    m.MatchType ?? "Unknown",
-                    m.Stadium ?? "",
-                    m.ScoreA,
-                    m.ScoreB,
-                    m.Status ?? "UPCOMING",
-                    m.WinnerTeamId,
-                    m.WinnerTeam != null ? m.WinnerTeam.Name : null
-                ))
                 .ToListAsync();
+
+            return matches.Select(m => new MatchDto(
+                m.Id,
+                m.TeamAId,
+                m.TeamA?.Name,
+                m.TeamBId,
+                m.TeamB?.Name,
+                m.ScheduledAt,
+                m.MatchType ?? "Unknown",
+                m.Stadium ?? "",
+                m.ScoreA ?? 0,
+                m.ScoreB ?? 0,
+                m.Status ?? "UPCOMING",
+                GetWinnerName(m)
+            ));
         }
 
         public async Task<MatchDto> CreateMatchAsync(long tournamentId, CreateMatchDto dto)
@@ -52,15 +58,29 @@ namespace TournamentDetails.Services
                 MatchType = dto.MatchType,
                 Status = "UPCOMING",
                 ScoreA = 0,
-                ScoreB = 0,
-                WinnerTeamId = 0
+                ScoreB = 0
             };
-
 
             _db.Matches.Add(match);
             await _db.SaveChangesAsync();
 
-            return await MapToDto(match.Id);
+            await _db.Entry(match).Reference(m => m.TeamA).LoadAsync();
+            await _db.Entry(match).Reference(m => m.TeamB).LoadAsync();
+
+            return new MatchDto(
+                match.Id,
+                match.TeamAId,
+                match.TeamA?.Name,
+                match.TeamBId,
+                match.TeamB?.Name,
+                match.ScheduledAt,
+                match.MatchType ?? "Unknown",
+                match.Stadium ?? "",
+                match.ScoreA ?? 0,
+                match.ScoreB ?? 0,
+                match.Status ?? "UPCOMING",
+                GetWinnerName(match)
+            );
         }
 
         public async Task<MatchDto> UpdateMatchAsync(long matchId, UpdateMatchDto dto)
@@ -68,7 +88,6 @@ namespace TournamentDetails.Services
             var match = await _db.Matches
                 .Include(m => m.TeamA)
                 .Include(m => m.TeamB)
-                .Include(m => m.WinnerTeam)
                 .FirstOrDefaultAsync(m => m.Id == matchId)
                 ?? throw new KeyNotFoundException("Match not found");
 
@@ -76,12 +95,22 @@ namespace TournamentDetails.Services
             match.ScoreB = dto.ScoreB;
             match.Status = dto.Status;
 
-            // Allow 0 to mean draw (no winner)
-            match.WinnerTeamId = dto.WinnerTeamId == 0 ? null : dto.WinnerTeamId;
-
             await _db.SaveChangesAsync();
 
-            return await MapToDto(matchId);
+            return new MatchDto(
+                match.Id,
+                match.TeamAId,
+                match.TeamA?.Name,
+                match.TeamBId,
+                match.TeamB?.Name,
+                match.ScheduledAt,
+                match.MatchType ?? "Unknown",
+                match.Stadium ?? "",
+                match.ScoreA ?? 0,
+                match.ScoreB ?? 0,
+                match.Status ?? "UPCOMING",
+                GetWinnerName(match)
+            );
         }
 
         public async Task<IEnumerable<StandingDto>> GetStandingsAsync(long tournamentId)
@@ -93,31 +122,6 @@ namespace TournamentDetails.Services
                 .ToListAsync();
 
             return StandingsCalculator.Calculate(matches);
-        }
-
-        private async Task<MatchDto> MapToDto(long matchId)
-        {
-            var m = await _db.Matches
-                .Include(x => x.TeamA)
-                .Include(x => x.TeamB)
-                .Include(x => x.WinnerTeam)
-                .FirstAsync(x => x.Id == matchId);
-
-            return new MatchDto(
-                m.Id,
-                m.TeamAId,
-                m.TeamA.Name,
-                m.TeamBId,
-                m.TeamB.Name,
-                m.ScheduledAt,
-                m.MatchType ?? "Unknown",
-                m.Stadium ?? "",
-                m.ScoreA,
-                m.ScoreB,
-                m.Status ?? "UPCOMING",
-                m.WinnerTeamId,
-                m.WinnerTeam != null ? m.WinnerTeam.Name : null
-            );
         }
     }
 }

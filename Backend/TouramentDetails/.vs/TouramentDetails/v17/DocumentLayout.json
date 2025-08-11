@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\services\\matchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:services\\matchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\dtos\\matchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:dtos\\matchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\controllers\\matchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:controllers\\matchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\models\\match.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:models\\match.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\services\\matchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:services\\matchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\controllers\\matchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|solutionrelative:controllers\\matchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TouramentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,7 +46,33 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "Data\\AppDbContext.cs",
+              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "Data\\AppDbContext.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAuwDQAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-10T19:59:36.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Match.cs",
+              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Models\\Match.cs",
+              "RelativeDocumentMoniker": "Models\\Match.cs",
+              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Models\\Match.cs",
+              "RelativeToolTip": "Models\\Match.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAIwBgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-10T16:40:35.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "MatchesController.cs",
               "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Controllers\\MatchesController.cs",
               "RelativeDocumentMoniker": "Controllers\\MatchesController.cs",
@@ -50,31 +80,17 @@
               "RelativeToolTip": "Controllers\\MatchesController.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAywBAAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-10T16:40:56.144Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-10T16:40:56.144Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Match.cs",
-              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Models\\Match.cs",
-              "RelativeDocumentMoniker": "Models\\Match.cs",
-              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Models\\Match.cs",
-              "RelativeToolTip": "Models\\Match.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAkwBoAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-10T16:40:35.333Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "MatchService.cs",
               "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Services\\MatchService.cs",
               "RelativeDocumentMoniker": "Services\\MatchService.cs",
               "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Services\\MatchService.cs",
               "RelativeToolTip": "Services\\MatchService.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAiwDcAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAmwE8AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-10T16:40:14.289Z",
               "EditorCaption": ""
@@ -94,7 +110,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -102,8 +118,7 @@
               "RelativeToolTip": "Program.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-08T18:01:36.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-08T18:01:36.035Z"
             }
           ]
         }

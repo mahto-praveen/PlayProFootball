@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import AddFixture from "./AddFixture";
+import AddResultForm from "./AddResultForm";
+
+
 
 const TournamentDetails = () => {
   const { id } = useParams();
@@ -15,7 +19,13 @@ const TournamentDetails = () => {
   const [fixtures, setFixtures] = useState([]);
   const [standings, setStandings] = useState([]);
   const [teams, setTeams] = useState([]);
-  const [teamMap, setTeamMap] = useState({}); // mapping for quick name lookup
+  const [teamMap, setTeamMap] = useState({}); 
+  const [showAddFixture, setShowAddFixture] = useState(false);
+  const [showAddResultForm, setShowAddResultForm] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState(null);
+
+
+
 
   useEffect(() => {
     fetchTournament();
@@ -104,7 +114,7 @@ const TournamentDetails = () => {
           </div>
         );
 
-      case "fixtures":
+case "fixtures":
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">📅 Fixtures</h2>
@@ -125,9 +135,9 @@ const TournamentDetails = () => {
             return (
               <div
                 key={match.id}
-                className="bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col items-center"
+                className="bg-gray-800 p-4 rounded-lg shadow-lg"
               >
-                <div className="flex items-center justify-between w-full">
+                <div className="flex items-center justify-between">
                   <span className="text-lg font-bold">
                     {teamMap[match.teamAId] || match.teamAId}
                   </span>
@@ -141,30 +151,104 @@ const TournamentDetails = () => {
                   🗓 {new Date(match.scheduledAt).toLocaleString()}
                 </div>
 
-                <div className={`mt-3 px-3 py-1 rounded-full text-sm font-semibold text-white ${statusClass}`}>
+                <div
+                  className={`mt-3 px-3 py-1 rounded-full text-sm font-semibold text-white ${statusClass}`}
+                >
                   {match.status}
                 </div>
+
+                {(role === 2 || role === 1) && (
+                  <div className="mt-4 flex flex-col gap-2">
+                    <button
+                      onClick={() => {
+                        if (selectedMatch?.id === match.id) {
+                          // Clicking again closes modal
+                          setSelectedMatch(null);
+                          setShowAddResultForm(false);
+                        } else {
+                          setSelectedMatch(match);
+                          setShowAddResultForm(true);
+                        }
+                      }}
+                      className="px-3 py-1 bg-green-600 hover:bg-green-500 text-white rounded"
+                    >
+                      ➕ Add Result
+                    </button>
+
+                    {/* Show AddResultForm inline if this match is selected */}
+                    {showAddResultForm && selectedMatch?.id === match.id && (
+                      <div className="mt-2">
+                        <AddResultForm
+                          matchId={match.id}
+                          onClose={() => {
+                            setShowAddResultForm(false);
+                            setSelectedMatch(null);
+                          }}
+                          onResultAdded={() => {
+                            fetchFixtures();
+                            setShowAddResultForm(false);
+                            setSelectedMatch(null);
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
         </div>
       )}
+
+      {(role === 2 || role === 1) && (
+        <>
+          <button
+            onClick={() => setShowAddFixture(true)}
+            className="mt-4 ml-2 px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded"
+          >
+            ➕ Add Fixture
+          </button>
+
+          {showAddFixture && (
+            <AddFixture
+              tournamentId={id}
+              teams={teams}
+              onClose={() => setShowAddFixture(false)}
+              onAdded={() => {
+                fetchFixtures();
+                setShowAddFixture(false);
+              }}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 
-     case "results":
-  const results = fixtures.filter(
-    (m) => m.status?.toLowerCase() === "completed"
-  );
+case "results":
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">🏆 Results</h2>
-      {results.length === 0 ? (
+
+      {fixtures.length === 0 ? (
         <p className="text-gray-400">No results yet.</p>
       ) : (
         <div className="grid gap-4">
-          {results.map((match) => {
-            const winnerId = match.winnerTeamId;
+          {fixtures.map((match) => {
+            const scoreA = Number(match.scoreA) || 0;
+            const scoreB = Number(match.scoreB) || 0;
+
+            let winnerText = "Draw";
+            let winnerId = null;
+
+            if (scoreA > scoreB) {
+              winnerId = match.teamAId;
+              winnerText = teamMap[winnerId] || winnerId;
+            } else if (scoreB > scoreA) {
+              winnerId = match.teamBId;
+              winnerText = teamMap[winnerId] || winnerId;
+            }
+
             return (
               <div
                 key={match.id}
@@ -174,12 +258,16 @@ const TournamentDetails = () => {
                 <div className="flex items-center justify-between w-full">
                   <div
                     className={`flex flex-col items-center w-1/3 ${
-                      winnerId === match.teamAId ? "text-green-400 font-bold" : "text-gray-300"
+                      winnerId === match.teamAId
+                        ? "text-green-400 font-bold"
+                        : "text-gray-300"
                     }`}
                   >
-                    <span className="text-lg">{teamMap[match.teamAId] || match.teamAId}</span>
+                    <span className="text-lg">
+                      {teamMap[match.teamAId] || match.teamAId}
+                    </span>
                     <span className="mt-1 px-3 py-1 bg-gray-700 rounded-lg text-xl font-semibold">
-                      {match.scoreA}
+                      {scoreA}
                     </span>
                   </div>
 
@@ -187,19 +275,23 @@ const TournamentDetails = () => {
 
                   <div
                     className={`flex flex-col items-center w-1/3 ${
-                      winnerId === match.teamBId ? "text-green-400 font-bold" : "text-gray-300"
+                      winnerId === match.teamBId
+                        ? "text-green-400 font-bold"
+                        : "text-gray-300"
                     }`}
                   >
-                    <span className="text-lg">{teamMap[match.teamBId] || match.teamBId}</span>
+                    <span className="text-lg">
+                      {teamMap[match.teamBId] || match.teamBId}
+                    </span>
                     <span className="mt-1 px-3 py-1 bg-gray-700 rounded-lg text-xl font-semibold">
-                      {match.scoreB}
+                      {scoreB}
                     </span>
                   </div>
                 </div>
 
                 {/* Winner */}
                 <div className="mt-3 px-4 py-1 bg-green-600 text-white rounded-full text-sm font-semibold">
-                  Winner: {teamMap[winnerId] || winnerId}
+                  Winner: {winnerText}
                 </div>
               </div>
             );
