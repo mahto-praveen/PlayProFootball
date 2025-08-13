@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TouramentDetails")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb98151fcee6b6ab51ebad98a1ad020c9464c358")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa4beb58dfbfba534ce71a1fbb8307fc13343916")]
 [assembly: System.Reflection.AssemblyProductAttribute("TouramentDetails")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TouramentDetails")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

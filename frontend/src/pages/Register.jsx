@@ -14,6 +14,7 @@ const Register = () => {
     password: '',
     phoneno: '',
     role: 3, // Default role = User
+    organizationName: '',
   });
 
   const [validationError, setValidationError] = useState('');
@@ -108,6 +109,18 @@ const Register = () => {
           <option value={2}>Organization</option>
           <option value={3}>User</option>
         </select>
+
+        {formData.role == 2 && (
+          <input
+            type="text"
+            name="organizationName"
+            placeholder="Organization Name"
+            onChange={handleChange}
+            className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+            required
+          />
+        )}
+
 
         {validationError && (
           <p className="text-red-500 text-center text-sm mb-4">{validationError}</p>

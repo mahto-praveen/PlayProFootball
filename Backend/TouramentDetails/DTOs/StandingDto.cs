@@ -1,4 +1,4 @@
-namespace TournamentFixtures.DTOs
+namespace TournamentDetails.DTOs
 {
     public record StandingDto(
         int TeamId,

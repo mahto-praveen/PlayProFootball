@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using TournamentFixtures.DTOs;
-using TournamentFixtures.Models;
+using TournamentDetails.DTOs;
+using TournamentDetails.Models;
 
-namespace TournamentFixtures.Utils
+namespace TournamentDetails.Utils
 {
     public static class StandingsCalculator
     {

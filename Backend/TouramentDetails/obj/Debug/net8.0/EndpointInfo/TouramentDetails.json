@@ -219,6 +219,143 @@
         }
       }
     },
+    "/api/matches/{matchId}/scores": {
+      "get": {
+        "tags": [
+          "MatchScoreDetail"
+        ],
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchScoreDetailDto"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchScoreDetailDto"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchScoreDetailDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "MatchScoreDetail"
+        ],
+        "parameters": [
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchScoreDetailDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchScoreDetailDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MatchScoreDetailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchScoreDetailDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchScoreDetailDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchScoreDetailDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/matches/{matchId}/scores/{scoreId}": {
+      "delete": {
+        "tags": [
+          "MatchScoreDetail"
+        ],
+        "parameters": [
+          {
+            "name": "scoreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "matchId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/tournaments/{tournamentId}/teams": {
       "get": {
         "tags": [
@@ -374,6 +511,14 @@
           "scheduledAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "stadium": {
+            "type": "string",
+            "nullable": true
+          },
+          "matchType": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -387,29 +532,93 @@
           },
           "teamAId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
+          },
+          "teamAName": {
+            "type": "string",
+            "nullable": true
           },
           "teamBId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int64"
+          },
+          "teamBName": {
+            "type": "string",
+            "nullable": true
           },
           "scheduledAt": {
             "type": "string",
             "format": "date-time"
           },
+          "matchType": {
+            "type": "string",
+            "nullable": true
+          },
+          "stadium": {
+            "type": "string",
+            "nullable": true
+          },
           "scoreA": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "scoreB": {
             "type": "integer",
-            "format": "int32",
-            "nullable": true
+            "format": "int32"
           },
           "status": {
             "type": "string",
             "nullable": true
+          },
+          "winnerName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MatchScoreDetailDto": {
+        "type": "object",
+        "properties": {
+          "scoreId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "matchId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tournamentId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "teamId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "goalsScored": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fouls": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "offside": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "yellowCards": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "redCards": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -493,6 +702,19 @@
           },
           "status": {
             "type": "string",
+            "nullable": true
+          },
+          "stadium": {
+            "type": "string",
+            "nullable": true
+          },
+          "matchType": {
+            "type": "string",
+            "nullable": true
+          },
+          "winnerTeamId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

@@ -1,4 +1,4 @@
-using TournamentFixtures.Models;
+using TournamentDetails.Models;
 
 public class TournamentTeam
 {

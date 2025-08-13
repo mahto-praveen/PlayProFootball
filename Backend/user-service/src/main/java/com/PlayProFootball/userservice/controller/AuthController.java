@@ -2,7 +2,9 @@ package com.PlayProFootball.userservice.controller;
 
 import com.PlayProFootball.userservice.dto.*;
 import com.PlayProFootball.userservice.entity.User;
+import com.PlayProFootball.userservice.entity.Organization;
 import com.PlayProFootball.userservice.repository.UserRepository;
+import com.PlayProFootball.userservice.repository.OrganizationRepository;
 import com.PlayProFootball.userservice.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,9 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private OrganizationRepository organizationRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -25,12 +30,23 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
     	System.out.println("Register API hit: " + request.getUsername());
+    	Long orgId = null;
+
+        // If role is ORGANIZER (role = 2), create organization
+        if (request.getRole() == 2 && request.getOrganizationName() != null && !request.getOrganizationName().isEmpty()) {
+            Organization org = Organization.builder()
+                    .name(request.getOrganizationName())
+                    .build();
+            org = organizationRepository.save(org);
+            orgId = org.getId();
+        }
         User user = User.builder()
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .email(request.getEmail())
                 .phoneno(request.getPhoneno())
+                .organizationId(orgId)
                 .enabled(true)
                 .build();
 

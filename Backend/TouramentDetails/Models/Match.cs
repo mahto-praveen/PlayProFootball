@@ -1,6 +1,6 @@
 using System;
 
-namespace TournamentFixtures.Models
+namespace TournamentDetails.Models
 {
     public class Match
     {
@@ -15,8 +15,13 @@ namespace TournamentFixtures.Models
         public Team TeamB { get; set; }
 
         public DateTime ScheduledAt { get; set; }
+        public string Stadium { get; set; }         
+
+        public string MatchType { get; set; }       
+
         public int? ScoreA { get; set; }
         public int? ScoreB { get; set; }
         public string Status { get; set; }
+
     }
 }

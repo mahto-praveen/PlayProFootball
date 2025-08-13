@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 @RestController
 @RequestMapping("/api/tournaments")
@@ -41,10 +40,9 @@ public class TournamentController {
     @PutMapping("/{id}")
     public ResponseEntity<TournamentDTO> updateTournament(
           @PathVariable Long id,
-          @RequestBody TournamentDTO dto,
-          Principal principal      // JWT-authenticated user
+          @RequestBody TournamentDTO dto
     ) {
-        TournamentDTO updated = tournamentService.updateTournament(id, dto, principal);
+        TournamentDTO updated = tournamentService.updateTournament(id, dto);
         return ResponseEntity.ok(updated);
     }
 

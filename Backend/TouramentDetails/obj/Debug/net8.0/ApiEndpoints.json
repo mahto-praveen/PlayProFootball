@@ -14,13 +14,13 @@
       },
       {
         "Name": "dto",
-        "Type": "TournamentFixtures.DTOs.UpdateMatchDto",
+        "Type": "TournamentDetails.DTOs.UpdateMatchDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "TournamentFixtures.DTOs.MatchDto",
+        "Type": "TournamentDetails.DTOs.MatchDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -29,6 +29,84 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "TournamentDetails.Controllers.MatchScoreDetailController",
+    "Method": "GetMatchScores",
+    "RelativePath": "api/matches/{matchId}/scores",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "matchId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentDetails.DTOs.MatchScoreDetailDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentDetails.Controllers.MatchScoreDetailController",
+    "Method": "CreateMatchScore",
+    "RelativePath": "api/matches/{matchId}/scores",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "matchId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "TournamentDetails.DTOs.MatchScoreDetailDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TournamentDetails.DTOs.MatchScoreDetailDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "TournamentDetails.Controllers.MatchScoreDetailController",
+    "Method": "DeleteScore",
+    "RelativePath": "api/matches/{matchId}/scores/{scoreId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "scoreId",
+        "Type": "System.Int64",
+        "IsRequired": true
+      },
+      {
+        "Name": "matchId",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "TournamentFixtures.Controllers.MatchesController",
@@ -46,7 +124,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentFixtures.DTOs.MatchDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentDetails.DTOs.MatchDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -71,13 +149,13 @@
       },
       {
         "Name": "dto",
-        "Type": "TournamentFixtures.DTOs.CreateMatchDto",
+        "Type": "TournamentDetails.DTOs.CreateMatchDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "TournamentFixtures.DTOs.MatchDto",
+        "Type": "TournamentDetails.DTOs.MatchDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -103,7 +181,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentFixtures.DTOs.StandingDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentDetails.DTOs.StandingDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -114,7 +192,7 @@
     ]
   },
   {
-    "ContainingType": "TournamentFixtures.Controllers.TeamsController",
+    "ContainingType": "TournamentDetails.Controllers.TeamsController",
     "Method": "GetTeams",
     "RelativePath": "api/tournaments/{tournamentId}/teams",
     "HttpMethod": "GET",
@@ -129,7 +207,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentFixtures.DTOs.TeamDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[TournamentDetails.DTOs.TeamDto, TouramentDetails, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -140,7 +218,7 @@
     ]
   },
   {
-    "ContainingType": "TournamentFixtures.Controllers.TeamsController",
+    "ContainingType": "TournamentDetails.Controllers.TeamsController",
     "Method": "AddTeam",
     "RelativePath": "api/tournaments/{tournamentId}/teams",
     "HttpMethod": "POST",
@@ -154,13 +232,13 @@
       },
       {
         "Name": "dto",
-        "Type": "TournamentFixtures.DTOs.TeamDto",
+        "Type": "TournamentDetails.DTOs.TeamDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "TournamentFixtures.DTOs.TeamDto",
+        "Type": "TournamentDetails.DTOs.TeamDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -171,7 +249,7 @@
     ]
   },
   {
-    "ContainingType": "TournamentFixtures.Controllers.TeamsController",
+    "ContainingType": "TournamentDetails.Controllers.TeamsController",
     "Method": "RemoveTeam",
     "RelativePath": "api/tournaments/{tournamentId}/teams/{teamId}",
     "HttpMethod": "DELETE",

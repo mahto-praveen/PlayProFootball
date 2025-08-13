@@ -68,17 +68,9 @@ export default function Login() {
             required
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <select
-            name="role"
-            onChange={handleChange}
-            value={formData.role}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="USER">User</option>
-            <option value="ORGANIZER">Organizer</option>
-          </select>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+          {error && <p className="text-red-500 text-sm text-center">Invalid credentials</p>}
 
           <button
             type="submit"
