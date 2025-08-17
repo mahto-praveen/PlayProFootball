@@ -1,0 +1,93 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\controllers\\matchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|solutionrelative:controllers\\matchescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\services\\matchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|solutionrelative:services\\matchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\dtos\\matchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|solutionrelative:dtos\\matchdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|d:\\project\\playprofootball\\backend\\touramentdetails\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A90C4444-33CA-4D8F-8C57-7B72BEF5B3FC}|TournamentDetails.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MatchesController.cs",
+              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Controllers\\MatchesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\MatchesController.cs",
+              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Controllers\\MatchesController.cs",
+              "RelativeToolTip": "Controllers\\MatchesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-10T16:40:56.144Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MatchService.cs",
+              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Services\\MatchService.cs",
+              "RelativeDocumentMoniker": "Services\\MatchService.cs",
+              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Services\\MatchService.cs",
+              "RelativeToolTip": "Services\\MatchService.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAmwEYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-10T16:40:14.289Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MatchDto.cs",
+              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\DTOs\\MatchDto.cs",
+              "RelativeDocumentMoniker": "DTOs\\MatchDto.cs",
+              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\DTOs\\MatchDto.cs",
+              "RelativeToolTip": "DTOs\\MatchDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-10T16:38:39.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Project\\PlayProFootball\\Backend\\TouramentDetails\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAC4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-08T18:01:36.035Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
